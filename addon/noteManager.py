@@ -78,7 +78,6 @@ Phrases：
 <hr>
 Sentences：
 <p>{{sentence}}</p>
-{{BrEPron}}
 {{AmEPron}}
 
 <script>
@@ -142,11 +141,9 @@ Phrases：
 <hr>
 Sentences：
 <p>{{sentence}}</p>
-{{BrEPron}}
 {{AmEPron}}
 '''
 CARDS['Sound']['qfmt'] = '''
-{{BrEPron}}
 {{AmEPron}}'''
 
 CARDS['Sound']['afmt'] = '''
@@ -165,10 +162,8 @@ Phrases：
 <hr>
 Sentences：
 <p>{{sentence}}</p>
-{{BrEPron}}
 {{AmEPron}}
 '''
-
 
 
 def getOrCreateModelCardTemplate(modelObject, cardTemplateName):
