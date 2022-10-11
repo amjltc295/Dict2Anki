@@ -52,10 +52,10 @@ def getOrCreateModel(modelName):
         if set([f['name'] for f in model['flds']]) == set(MODEL_FIELDS):
             return model
         else:
-            logger.warning('模版字段异常，自动删除重建')
+            logger.warning('模版字段異常，自動刪除重建')
             mw.col.models.rem(model)
 
-    logger.info(f'创建新模版:{modelName}')
+    logger.info(f'創建新模版:{modelName}')
     newModel = mw.col.models.new(modelName)
     for field in MODEL_FIELDS:
         mw.col.models.addField(newModel, mw.col.models.newField(field))
@@ -172,7 +172,7 @@ Sentences：
 
 
 def getOrCreateModelCardTemplate(modelObject, cardTemplateName):
-    logger.info(f'添加卡片类型:{cardTemplateName}')
+    logger.info(f'添加卡片類型:{cardTemplateName}')
     existingCardTemplate = modelObject['tmpls']
     if cardTemplateName in [t.get('name') for t in existingCardTemplate]:
         return
@@ -185,16 +185,16 @@ def getOrCreateModelCardTemplate(modelObject, cardTemplateName):
 
 def addNoteToDeck(deckObject, modelObject, currentConfig: dict, oneQueryResult: dict):
     if not oneQueryResult:
-        logger.warning(f'查询结果{oneQueryResult} 异常，忽略')
+        logger.warning(f'查詢結果{oneQueryResult} 異常，忽略')
         return
     modelObject['did'] = deckObject['id']
 
     newNote = anki.notes.Note(mw.col, modelObject)
     term = newNote['term'] = oneQueryResult['term']
     for configName in BASIC_OPTION + EXTRA_OPTION:
-        logger.debug(f'字段:{configName}--结果:{oneQueryResult.get(configName)}')
+        logger.debug(f'字段:{configName}--結果:{oneQueryResult.get(configName)}')
         if oneQueryResult.get(configName):
-            # 短语例句
+            # Sentences and phrases
             if configName in ['sentence', 'phrase'] and currentConfig[configName]:
                 es = []
                 cs = []
@@ -207,19 +207,19 @@ def addNoteToDeck(deckObject, modelObject, currentConfig: dict, oneQueryResult: 
                 newNote[configName] = '\n'.join(
                     [f'<p>{e}<br>\n{c}</p>'
                      for e, c in zip(es, cs)])
-            # 图片
+            # Image
             elif configName == 'image':
                 newNote[configName] = f'src="{oneQueryResult[configName]}"'
-            # 释义
+            # Definition
             elif configName == 'definition' and currentConfig[configName]:
                 newNote[configName] = '<br>'.join(oneQueryResult[configName])
-            # 发音
+            # Pronunciation
             elif configName in EXTRA_OPTION[:2]:
                 newNote[configName] = f"[sound:{configName}_{oneQueryResult['term']}.mp3]"
-            # 其他
+            # Others
             elif currentConfig[configName]:
                 newNote[configName] = oneQueryResult[configName]
 
     mw.col.addNote(newNote)
     mw.col.reset()
-    logger.info(f"添加笔记{newNote['term']}")
+    logger.info(f"添加筆記{newNote['term']}")

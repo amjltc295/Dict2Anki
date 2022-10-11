@@ -10,7 +10,7 @@ logger = logging.getLogger('dict2Anki.dictionary.youdao')
 
 
 class Youdao(AbstractDictionary):
-    name = '有道词典'
+    name = '有道詞典'
     loginUrl = 'http://account.youdao.com/login?service=dict&back_url=http://dict.youdao.com/wordbook/wordlist%3Fkeyfrom%3Dnull'
     timeout = 10
     headers = {
@@ -28,7 +28,7 @@ class Youdao(AbstractDictionary):
 
     def checkCookie(self, cookie: dict) -> bool:
         """
-        cookie有效性检验
+        cookie有效性檢驗
         :param cookie:
         :return: bool
         """
@@ -50,7 +50,7 @@ class Youdao(AbstractDictionary):
 
     def getGroups(self) -> [(str, int)]:
         """
-        获取单词本分组
+        獲取單詞本分組
         :return: [(group_name,group_id)]
         """
         r = self.session.get(
@@ -58,16 +58,16 @@ class Youdao(AbstractDictionary):
             timeout=self.timeout,
         )
         groups = [(g['bookName'], g['bookId']) for g in r.json()['data']]
-        logger.info(f'单词本分组:{groups}')
+        logger.info(f'單詞本分組:{groups}')
         self.groups = groups
 
         return groups
 
     def getTotalPage(self, groupName: str, groupId: int) -> int:
         """
-        获取分组下总页数
-        :param groupName: 分组名称
-        :param groupId:分组id
+        獲取分組下總頁數
+        :param groupName: 分組名稱
+        :param groupId:分組id
         :return:
         """
         try:
@@ -77,26 +77,26 @@ class Youdao(AbstractDictionary):
                 params={'bookId': groupId, 'limit': 1, 'offset': 0}
             )
             totalWords = r.json()['data']['total']
-            totalPages = ceil(totalWords / 15)  # 这里按网页默认每页取15个
+            totalPages = ceil(totalWords / 15)  # 這裡按網頁默認每頁取15個
 
         except Exception as error:
-            logger.exception(f'网络异常{error}')
+            logger.exception(f'網絡異常{error}')
 
         else:
-            logger.info(f'该分组({groupName}-{groupId})下共有{totalPages}页')
+            logger.info(f'該分組({groupName}-{groupId})下共有{totalPages}頁')
             return totalPages
 
     def getWordsByPage(self, pageNo: int, groupName: str, groupId: str) -> [str]:
         """
-        获取分组下每一页的单词
-        :param pageNo: 页数
-        :param groupName: 分组名
-        :param groupId: 分组id
+        獲取分組下每一頁的單詞
+        :param pageNo: 頁數
+        :param groupName: 分組名
+        :param groupId: 分組id
         :return:
         """
         wordList = []
         try:
-            logger.info(f'获取单词本(f{groupName}-{groupId})第:{pageNo}页')
+            logger.info(f'獲取單詞本(f{groupName}-{groupId})第:{pageNo}頁')
             r = self.session.get(
                 'http://dict.youdao.com/wordbook/webapi/words',
                 timeout=self.timeout,
@@ -104,7 +104,7 @@ class Youdao(AbstractDictionary):
             )
             wordList = [item['word'] for item in r.json()['data']['itemList']]
         except Exception as e:
-            logger.exception(f'网络异常{e}')
+            logger.exception(f'網絡異常{e}')
         finally:
             logger.info(wordList)
             return wordList

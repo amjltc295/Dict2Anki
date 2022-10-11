@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>单词本分组</string>
+   <string>單詞本分組</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>

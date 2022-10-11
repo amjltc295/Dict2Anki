@@ -28,17 +28,17 @@ class Parser:
             return ret
 
         div = div[0]
-        els = div.select('li') # 多词性
-        if not els: # 单一词性
+        els = div.select('li') # 多詞性
+        if not els: # 單一詞性
             els = div.select('.exp')
-        if not els: # 还有一奇怪的情况，不在任何的标签里面
+        if not els: # 還有一奇怪的情況，不在任何的標籤裡面
             trans = div.find(id='trans')
             trans.replace_with('') if trans else ''
 
             script = div.find('script')
             script.replace_with('') if script else ''
 
-            for atag in div.find_all('a'): # 赞踩这些字样
+            for atag in div.find_all('a'): # 贊踩這些字樣
                 atag.replace_with('')
             els = [div]
 
@@ -66,9 +66,9 @@ class Parser:
         phons = el.select('.Phonitic')
 
         if not links:
-            # 可能是只有一个发音的情况
+            # 可能是隻有一個發音的情況
             links = self._soap.select('div .gv_details .voice-button')
-            # 返回两个相同的。下载只会按照用户选择下载一个，这样至少可以保证总是有发音
+            # 返回兩個相同的。下載只會按照用戶選擇下載一個，這樣至少可以保證總是有發音
             links = [links[0], links[0]] if links else ''
 
         try:
@@ -95,22 +95,22 @@ class Parser:
 
     @property
     def BrEPhonetic(self) -> str:
-        """英式音标"""
+        """英式音標"""
         return self.pronunciations['BrEPhonetic']
 
     @property
     def AmEPhonetic(self) -> str:
-        """美式音标"""
+        """美式音標"""
         return self.pronunciations['AmEPhonetic']
 
     @property
     def BrEPron(self) -> str:
-        """英式发音url"""
+        """英式發音url"""
         return self.pronunciations['BrEUrl']
 
     @property
     def AmEPron(self) -> str:
-        """美式发音url"""
+        """美式發音url"""
         return self.pronunciations['AmEUrl']
 
     @property
@@ -169,7 +169,7 @@ class Parser:
 
 
 class API(AbstractQueryAPI):
-    name = '欧陆词典 API'
+    name = '歐陸詞典 API'
     timeout = 10
     headers = {
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36',

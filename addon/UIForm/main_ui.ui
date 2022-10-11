@@ -45,7 +45,7 @@
           </size>
          </property>
          <property name="text">
-          <string>开始同步</string>
+          <string>開始同步</string>
          </property>
         </widget>
        </item>
@@ -60,7 +60,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>牌组</string>
+            <string>牌組</string>
            </property>
           </widget>
          </item>
@@ -89,7 +89,7 @@
            <item>
             <widget class="QLabel" name="label">
              <property name="text">
-              <string>新单词</string>
+              <string>新單詞</string>
              </property>
             </widget>
            </item>
@@ -116,7 +116,7 @@
            <item>
             <widget class="QLabel" name="label_2">
              <property name="text">
-              <string>待删除</string>
+              <string>待刪除</string>
              </property>
             </widget>
            </item>
@@ -142,7 +142,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>查询</string>
+            <string>查詢</string>
            </property>
           </widget>
          </item>
@@ -169,7 +169,7 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>词典</string>
+            <string>詞典</string>
            </property>
           </widget>
          </item>
@@ -200,7 +200,7 @@
           </size>
          </property>
          <property name="text">
-          <string>获取单词</string>
+          <string>獲取單詞</string>
          </property>
         </widget>
        </item>
@@ -222,7 +222,7 @@
           </size>
          </property>
          <property name="text">
-          <string>查询</string>
+          <string>查詢</string>
          </property>
         </widget>
        </item>
@@ -230,13 +230,13 @@
      </widget>
      <widget class="QWidget" name="settingTab">
       <attribute name="title">
-       <string>设置</string>
+       <string>設置</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="1" column="0" colspan="2">
         <widget class="QGroupBox" name="defaultConfigGroupBox">
          <property name="title">
-          <string>默认设置</string>
+          <string>默認設置</string>
          </property>
          <layout class="QGridLayout" name="gridLayout">
           <item row="0" column="1">
@@ -252,7 +252,7 @@
           <item row="0" column="0">
            <widget class="QCheckBox" name="definitionCheckBox">
             <property name="text">
-             <string>释义</string>
+             <string>釋義</string>
             </property>
             <property name="checked">
              <bool>true</bool>
@@ -262,7 +262,7 @@
           <item row="5" column="2">
            <widget class="QRadioButton" name="noPronRadioButton">
             <property name="text">
-             <string>无发音</string>
+             <string>無發音</string>
             </property>
             <property name="checked">
              <bool>true</bool>
@@ -272,7 +272,7 @@
           <item row="0" column="2">
            <widget class="QCheckBox" name="phraseCheckBox">
             <property name="text">
-             <string>短语</string>
+             <string>短語</string>
             </property>
             <property name="checked">
              <bool>true</bool>
@@ -282,7 +282,7 @@
           <item row="5" column="0">
            <widget class="QRadioButton" name="BrEPronRadioButton">
             <property name="text">
-             <string>英式发音</string>
+             <string>英式發音</string>
             </property>
             <property name="checked">
              <bool>false</bool>
@@ -292,14 +292,14 @@
           <item row="5" column="1">
            <widget class="QRadioButton" name="AmEPronRadioButton">
             <property name="text">
-             <string>美式发音</string>
+             <string>美式發音</string>
             </property>
            </widget>
           </item>
           <item row="1" column="1">
            <widget class="QCheckBox" name="BrEPhoneticCheckBox">
             <property name="text">
-             <string>英式英标</string>
+             <string>英式英標</string>
             </property>
             <property name="checked">
              <bool>true</bool>
@@ -309,7 +309,7 @@
           <item row="1" column="2">
            <widget class="QCheckBox" name="AmEPhoneticCheckBox">
             <property name="text">
-             <string>美式英标</string>
+             <string>美式英標</string>
             </property>
             <property name="checked">
              <bool>true</bool>
@@ -319,7 +319,7 @@
           <item row="1" column="0">
            <widget class="QCheckBox" name="imageCheckBox">
             <property name="text">
-             <string>图片</string>
+             <string>圖片</string>
             </property>
             <property name="checked">
              <bool>true</bool>
@@ -332,7 +332,7 @@
        <item row="0" column="0" colspan="2">
         <widget class="QGroupBox" name="credentialGroupBox">
          <property name="title">
-          <string>账号设置</string>
+          <string>賬號設置</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_3">
           <item row="0" column="0" colspan="2">
@@ -344,14 +344,14 @@
              </sizepolicy>
             </property>
             <property name="text">
-             <string>当前选择词典: </string>
+             <string>當前選擇詞典: </string>
             </property>
            </widget>
           </item>
           <item row="1" column="0">
            <widget class="QLabel" name="usernameLabel">
             <property name="text">
-             <string>账号</string>
+             <string>賬號</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -371,7 +371,7 @@
           <item row="2" column="0">
            <widget class="QLabel" name="passwordLabel">
             <property name="text">
-             <string>密码</string>
+             <string>密碼</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -410,7 +410,7 @@
              </sizepolicy>
             </property>
             <property name="placeholderText">
-             <string>选填</string>
+             <string>選填</string>
             </property>
             <property name="clearButtonEnabled">
              <bool>true</bool>
@@ -424,7 +424,7 @@
      </widget>
      <widget class="QWidget" name="logTab">
       <attribute name="title">
-       <string>日志</string>
+       <string>日誌</string>
       </attribute>
      </widget>
     </widget>

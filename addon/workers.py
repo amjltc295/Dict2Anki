@@ -19,17 +19,17 @@ class VersionCheckWorker(QObject):
 
     def run(self):
         try:
-            self.logger.info('检查新版本')
+            self.logger.info('檢查新版本')
             rsp = requests.get(VERSION_CHECK_API, timeout=20).json()
             version = rsp['tag_name']
             changeLog = rsp['body']
             if version != VERSION:
-                self.logger.info(f'检查到新版本:{version}--{changeLog.strip()}')
+                self.logger.info(f'檢查到新版本:{version}--{changeLog.strip()}')
                 self.haveNewVersion.emit(version.strip(), changeLog.strip())
             else:
-                self.logger.info(f'当前为最新版本:{VERSION}')
+                self.logger.info(f'當前為最新版本:{VERSION}')
         except Exception as e:
-            self.logger.error(f'版本检查失败{e}')
+            self.logger.error(f'版本檢查失敗{e}')
 
         finally:
             self.finished.emit()
@@ -109,10 +109,10 @@ class QueryWorker(QObject):
                 return
             queryResult = self.api.query(word)
             if queryResult:
-                self.logger.info(f'查询成功: {word} -- {queryResult}')
+                self.logger.info(f'查詢成功: {word} -- {queryResult}')
                 self.thisRowDone.emit(row, queryResult)
             else:
-                self.logger.warning(f'查询失败: {word}')
+                self.logger.warning(f'查詢失敗: {word}')
                 self.thisRowFailed.emit(row)
 
             self.tick.emit()
@@ -151,9 +151,9 @@ class AudioDownloadWorker(QObject):
                     for chunk in r.iter_content(chunk_size=1024):
                         if chunk:
                             f.write(chunk)
-                self.logger.info(f'{fileName} 下载完成')
+                self.logger.info(f'{fileName} 下載完成')
             except Exception as e:
-                self.logger.warning(f'下载{fileName}:{url}异常: {e}')
+                self.logger.warning(f'下載{fileName}:{url}異常: {e}')
             finally:
                 self.tick.emit()
 

@@ -66,22 +66,22 @@ class Parser:
 
     @property
     def BrEPhonetic(self)->str:
-        """英式音标"""
+        """英式音標"""
         return self.pronunciations['BrEPhonetic']
 
     @property
     def AmEPhonetic(self)->str:
-        """美式音标"""
+        """美式音標"""
         return self.pronunciations['AmEPhonetic']
 
     @property
     def BrEPron(self)->str:
-        """英式发音url"""
+        """英式發音url"""
         return self.pronunciations['BrEUrl']
 
     @property
     def AmEPron(self)->str:
-        """美式发音url"""
+        """美式發音url"""
         return self.pronunciations['AmEUrl']
 
     @property

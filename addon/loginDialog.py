@@ -52,7 +52,7 @@ class LoginDialog(QDialog, loginDialog.Ui_LoginDialog):
 class LoginWebEngineView(QWebEngineView):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # 绑定cookie被添加的信号槽
+        # 綁定cookie被添加的信號槽
         self.profile = QWebEngineProfile.defaultProfile()
         self.profile.setHttpUserAgent(
             'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko)'

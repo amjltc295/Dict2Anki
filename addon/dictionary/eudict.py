@@ -11,7 +11,7 @@ logger = logging.getLogger('dict2Anki.dictionary.eudict')
 
 
 class Eudict(AbstractDictionary):
-    name = '欧陆词典'
+    name = '歐陸詞典'
     loginUrl = 'https://dict.eudic.net/account/login'
     timeout = 10
     headers = {
@@ -29,7 +29,7 @@ class Eudict(AbstractDictionary):
 
     def checkCookie(self, cookie: dict) -> bool:
         """
-        cookie有效性检验
+        cookie有效性檢驗
         :param cookie:
         :return: Boolean cookie是否有效
         """
@@ -51,7 +51,7 @@ class Eudict(AbstractDictionary):
 
     def getGroups(self) -> [(str, int)]:
         """
-        获取单词本分组
+        獲取單詞本分組
         :return: [(group_name,group_id)]
         """
         elements = self.indexSoup.find_all('a', class_='media_heading_a new_cateitem_click')
@@ -59,14 +59,14 @@ class Eudict(AbstractDictionary):
         if elements:
             groups = [(el.string, el['data-id']) for el in elements]
 
-        logger.info(f'单词本分组:{groups}')
+        logger.info(f'單詞本分組:{groups}')
         self.groups = groups
 
     def getTotalPage(self, groupName: str, groupId: int) -> int:
         """
-        获取分组下总页数
-        :param groupName: 分组名称
-        :param groupId:分组id
+        獲取分組下總頁數
+        :param groupName: 分組名稱
+        :param groupId:分組id
         :return:
         """
         try:
@@ -77,10 +77,10 @@ class Eudict(AbstractDictionary):
             )
             records = r.json()['recordsTotal']
             totalPages = ceil(records / 100)
-            logger.info(f'该分组({groupName}-{groupId})下共有{totalPages}页')
+            logger.info(f'該分組({groupName}-{groupId})下共有{totalPages}頁')
             return totalPages
         except Exception as error:
-            logger.exception(f'网络异常{error}')
+            logger.exception(f'網絡異常{error}')
             return 0
 
     def getWordsByPage(self, pageNo: int, groupName: str, groupId: int) -> [str]:
@@ -93,7 +93,7 @@ class Eudict(AbstractDictionary):
             '_': int(time.time()) * 1000,
         }
         try:
-            logger.info(f'获取单词本(f{groupName}-{groupId})第:{pageNo + 1}页')
+            logger.info(f'獲取單詞本(f{groupName}-{groupId})第:{pageNo + 1}頁')
             r = self.session.get(
                 url='https://my.eudic.net/StudyList/WordsDataSource',
                 timeout=self.timeout,
@@ -102,7 +102,7 @@ class Eudict(AbstractDictionary):
             wl = r.json()
             wordList = list(set(word['uuid'] for word in wl['data']))
         except Exception as error:
-            logger.exception(f'网络异常{error}')
+            logger.exception(f'網絡異常{error}')
         finally:
             logger.info(wordList)
             return wordList
