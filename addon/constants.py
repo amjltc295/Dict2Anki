@@ -1,4 +1,4 @@
-VERSION = 'v1'
+VERSION = 'v1.0.0'
 RELEASE_URL = 'https://github.com/amjltc295/Dict2Anki'
 VERSION_CHECK_API = 'https://api.github.com/repos/amjltc295/Dict2Anki/releases/latest'
 MODEL_NAME = f'Dict2Anki-AllenC-{VERSION}'
