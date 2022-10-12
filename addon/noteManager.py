@@ -62,62 +62,125 @@ def getOrCreateModel(modelName):
     return newModel
 
 
+CARDS = {'Recognition': {}, 'Recall': {}, 'Sound': {}}
+CARDS['Recognition']['qfmt'] = '''
+<table>
+    <tr>
+        <td><h1 class="term">{{term}}</h1><br><div> 英 [{{BrEPhonetic}}] 美 [{{AmEPhonetic}}]</div></div></td>
+    </tr>
+</table>
+<hr>
+Definition：
+<div>Tap to View</div>
+<hr>
+Phrases：
+<p>{{phrase}}</p>
+<hr>
+Sentences：
+<p>{{sentence}}</p>
+{{BrEPron}}
+{{AmEPron}}
+
+<script>
+document.querySelectorAll("span.ch").forEach(e => e.remove());
+examples.querySelectorAll("b").forEach(e => e.innerText = '[...]');
+</script>
+'''
+
+CARDS['Recognition']['afmt'] = '''
+<table>
+    <tr>
+        <td><h1 class="term">{{term}}</h1><br><div> 英 [{{BrEPhonetic}}] 美 [{{AmEPhonetic}}]</div></div></td>
+        <td><img {{image}} height="120px"></td>
+    </tr>
+</table>
+<hr>
+Definition：
+<div>{{definition}}</div>
+<hr>
+Phrases：
+<p>{{phrase}}</p>
+<hr>
+Sentences：
+<p>{{sentence}}</p>
+'''
+
+
+CARDS['Recall']['qfmt'] = '''
+<table>
+    <tr>
+        <td><img {{image}} height="120px"></td>
+    </tr>
+</table>
+<hr>
+Definition：
+<div>{{definition}}</div>
+<hr>
+Phrases：
+<p>{{phrase}}</p>
+<hr>
+
+<script>
+document.querySelectorAll("b").forEach(e => e.innerText = '[...]');
+</script>
+
+'''
+
+CARDS['Recall']['afmt'] = '''
+<table>
+    <tr>
+        <td><h1 class="term">{{term}}</h1><br><div> 英 [{{BrEPhonetic}}] 美 [{{AmEPhonetic}}]</div></div></td>
+        <td><img {{image}} height="120px"></td>
+    </tr>
+</table>
+<hr>
+Definition：
+<div>Tap to View</div>
+<hr>
+Phrases：
+<p>{{phrase}}</p>
+<hr>
+Sentences：
+<p>{{sentence}}</p>
+{{BrEPron}}
+{{AmEPron}}
+'''
+CARDS['Sound']['qfmt'] = '''
+{{BrEPron}}
+{{AmEPron}}'''
+
+CARDS['Sound']['afmt'] = '''
+<table>
+    <tr>
+        <td><h1 class="term">{{term}}</h1><br><div> 英 [{{BrEPhonetic}}] 美 [{{AmEPhonetic}}]</div></div></td>
+        <td><img {{image}} height="120px"></td>
+    </tr>
+</table>
+<hr>
+Definition：
+<div>Tap to View</div>
+<hr>
+Phrases：
+<p>{{phrase}}</p>
+<hr>
+Sentences：
+<p>{{sentence}}</p>
+{{BrEPron}}
+{{AmEPron}}
+'''
+
+
+
 def getOrCreateModelCardTemplate(modelObject, cardTemplateName):
     logger.info(f'添加卡片类型:{cardTemplateName}')
     existingCardTemplate = modelObject['tmpls']
     if cardTemplateName in [t.get('name') for t in existingCardTemplate]:
         return
     cardTemplate = mw.col.models.newTemplate(cardTemplateName)
-    cardTemplate['qfmt'] = '''
-        <table>
-            <tr>
-                <td><h1 class="term">{{term}}</h1><br><div> 英 [{{BrEPhonetic}}] 美 [{{AmEPhonetic}}]</div></div></td>
-                <td><img {{image}} height="120px"></td>
-            </tr>
-        </table>
-        <hr>
-        释义：
-        <div>Tap to View</div>
-        <hr>
-        短语：
-        <table>{{phraseFront}}</table>
-        <hr>
-        例句：
-        <table>{{sentenceFront}}</table>
-        {{BrEPron}}
-        {{AmEPron}}
-    '''
-    cardTemplate['afmt'] = '''
-        <table>
-            <tr>
-                <td><h1 class="term">{{term}}</h1><br><div> 英 [{{BrEPhonetic}}] 美 [{{AmEPhonetic}}]</div></div></td>
-                <td><img {{image}} height="120px"></td>
-            </tr>
-        </table>
-        <hr>
-        释义：
-        <div>{{definition}}</div>
-        <hr>
-        短语：
-        <table>{{phraseBack}}</table>
-        <hr>
-        例句：
-        <table>{{sentenceBack}}</table>
-    '''
-    modelObject['css'] = '''
-        .card {
-            font-family: arial;
-            font-size: 20px;
-            text-align: left;
-            color: black;
-            background-color: white;
-        }
-        .term {
-            font-size : 35px;
-        }
-    '''
+    cardTemplate['qfmt'] = CARDS[cardTemplateName]['qfmt']
+    cardTemplate['afmt'] = CARDS[cardTemplateName]['afmt']
+
     mw.col.models.addTemplate(modelObject, cardTemplate)
-    mw.col.models.add(modelObject)
 
 
 def addNoteToDeck(deckObject, modelObject, currentConfig: dict, oneQueryResult: dict):
@@ -127,22 +190,29 @@ def addNoteToDeck(deckObject, modelObject, currentConfig: dict, oneQueryResult: 
     modelObject['did'] = deckObject['id']
 
     newNote = anki.notes.Note(mw.col, modelObject)
-    newNote['term'] = oneQueryResult['term']
+    term = newNote['term'] = oneQueryResult['term']
     for configName in BASIC_OPTION + EXTRA_OPTION:
         logger.debug(f'字段:{configName}--结果:{oneQueryResult.get(configName)}')
         if oneQueryResult.get(configName):
             # 短语例句
             if configName in ['sentence', 'phrase'] and currentConfig[configName]:
-                newNote[f'{configName}Front'] = '\n'.join(
-                    [f'<tr><td>{e.strip()}</td></tr>' for e, _ in oneQueryResult[configName]])
-                newNote[f'{configName}Back'] = '\n'.join(
-                    [f'<tr><td>{e.strip()}<br>{c.strip()}</td></tr>' for e, c in oneQueryResult[configName]])
+                es = []
+                cs = []
+                for e, c in oneQueryResult[configName]:
+                    e = e.strip().replace(term, f'<b>{term}</b>')
+                    c = c.strip()
+                    es.append(f'<span class="en">{e}</span>')
+                    cs.append(f'<span class="ch">{c}</span>')
+
+                newNote[configName] = '\n'.join(
+                    [f'<p>{e}<br>\n{c}</p>'
+                     for e, c in zip(es, cs)])
             # 图片
             elif configName == 'image':
                 newNote[configName] = f'src="{oneQueryResult[configName]}"'
             # 释义
             elif configName == 'definition' and currentConfig[configName]:
-                newNote[configName] = ' '.join(oneQueryResult[configName])
+                newNote[configName] = '<br>'.join(oneQueryResult[configName])
             # 发音
             elif configName in EXTRA_OPTION[:2]:
                 newNote[configName] = f"[sound:{configName}_{oneQueryResult['term']}.mp3]"

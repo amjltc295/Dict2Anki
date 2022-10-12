@@ -171,7 +171,10 @@ class Parser:
 class API(AbstractQueryAPI):
     name = '欧陆词典 API'
     timeout = 10
-    headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36'}
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36',
+        'Accept-Language': 'zh-TW'
+    }
     retries = Retry(total=5, backoff_factor=1, status_forcelist=[500, 502, 503, 504])
     session = requests.Session()
     session.mount('http://', HTTPAdapter(max_retries=retries))
@@ -183,7 +186,7 @@ class API(AbstractQueryAPI):
     def query(cls, word) -> dict:
         queryResult = None
         try:
-            rsp = cls.session.get(cls.url.format(word), timeout=cls.timeout)
+            rsp = cls.session.get(cls.url.format(word), timeout=cls.timeout, headers=cls.headers)
             logger.debug(f'code:{rsp.status_code}- word:{word} text:{rsp.text[:100]}')
             queryResult = cls.parser(rsp.text, word).result
         except Exception as e:

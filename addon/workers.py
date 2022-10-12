@@ -1,5 +1,7 @@
 import json
 import logging
+import os
+
 import requests
 from urllib3 import Retry
 from itertools import chain
@@ -132,7 +134,6 @@ class AudioDownloadWorker(QObject):
     session = requests.Session()
     session.mount('http://', HTTPAdapter(max_retries=retries))
     session.mount('https://', HTTPAdapter(max_retries=retries))
-
     def __init__(self, audios: [tuple]):
         super().__init__()
         self.audios = audios
@@ -145,6 +146,7 @@ class AudioDownloadWorker(QObject):
                 if currentThread.isInterruptionRequested():
                     return
                 r = self.session.get(url, stream=True)
+                self.logger.info(f'現在位置 {os.getcwd()}')
                 with open(fileName, 'wb') as f:
                     for chunk in r.iter_content(chunk_size=1024):
                         if chunk:
