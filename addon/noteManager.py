@@ -66,7 +66,7 @@ CARDS = {'Recognition': {}, 'Recall': {}, 'Sound': {}}
 CARDS['Recognition']['qfmt'] = '''
 <table>
     <tr>
-        <td><h1 class="term">{{term}}</h1><br><div> 英 [{{BrEPhonetic}}] 美 [{{AmEPhonetic}}]</div></div></td>
+        <td><h1 class="term">{{term}}</h1><br><div> UK [{{BrEPhonetic}}] US [{{AmEPhonetic}}]</div></div></td>
     </tr>
 </table>
 <hr>
@@ -89,7 +89,7 @@ examples.querySelectorAll("b").forEach(e => e.innerText = '[...]');
 CARDS['Recognition']['afmt'] = '''
 <table>
     <tr>
-        <td><h1 class="term">{{term}}</h1><br><div> 英 [{{BrEPhonetic}}] 美 [{{AmEPhonetic}}]</div></div></td>
+        <td><h1 class="term">{{term}}</h1><br><div> UK [{{BrEPhonetic}}] US [{{AmEPhonetic}}]</div></div></td>
         <td><img {{image}} height="120px"></td>
     </tr>
 </table>
@@ -128,7 +128,7 @@ document.querySelectorAll("b").forEach(e => e.innerText = '[...]');
 CARDS['Recall']['afmt'] = '''
 <table>
     <tr>
-        <td><h1 class="term">{{term}}</h1><br><div> 英 [{{BrEPhonetic}}] 美 [{{AmEPhonetic}}]</div></div></td>
+        <td><h1 class="term">{{term}}</h1><br><div> UK [{{BrEPhonetic}}] US [{{AmEPhonetic}}]</div></div></td>
         <td><img {{image}} height="120px"></td>
     </tr>
 </table>
@@ -149,13 +149,13 @@ CARDS['Sound']['qfmt'] = '''
 CARDS['Sound']['afmt'] = '''
 <table>
     <tr>
-        <td><h1 class="term">{{term}}</h1><br><div> 英 [{{BrEPhonetic}}] 美 [{{AmEPhonetic}}]</div></div></td>
+        <td><h1 class="term">{{term}}</h1><br><div> UK [{{BrEPhonetic}}] US [{{AmEPhonetic}}]</div></div></td>
         <td><img {{image}} height="120px"></td>
     </tr>
 </table>
 <hr>
 Definition：
-<div>Tap to View</div>
+<div>{{definition}}</div>
 <hr>
 Phrases：
 <p>{{phrase}}</p>
